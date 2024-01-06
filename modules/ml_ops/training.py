@@ -4,11 +4,13 @@ from modules.ml_source.training import split_data, model_training, log_metadata,
 
 
 def run_training(logger: logging.Logger,
+                 config: dict,
                  df: pd.DataFrame) -> pd.DataFrame:
     """Split data into train and test datasets.
 
         Args:
             logger (logging.Logger): Logger for logging.
+            config (dict): Project configuration file.
             df (pd.DataFrame): Processed data for model training.
         Return:
             metadata (pd.DataFrame): Trained model metadata.
@@ -23,11 +25,11 @@ def run_training(logger: logging.Logger,
     out_dict = model_training(data)
 
     logger.info("Log model metadata")
-    metadata = log_metadata(out_dict)
+    metadata = log_metadata(config, out_dict)
     logger.info(f"Added {len(metadata.index)} rows to metadata file")
 
     logger.info("Save model")
-    save_model(out_dict['model'])
+    save_model(config, out_dict['model'])
 
     logger.info("Training complete")
 

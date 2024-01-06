@@ -66,10 +66,11 @@ def split_data(df: pd.DataFrame) -> dict:
     return data
 
 
-def log_metadata(metrics: dict) -> pd.DataFrame:
+def log_metadata(config: dict, metrics: dict) -> pd.DataFrame:
     """Log model training metadata to file.
 
         Args:
+            config (dict): Project configuration file.
             metrics (dict): Training metrics to be logged.
         Return:
             metadata_temp (pd.DataFrame): model metadata for current run.
@@ -78,17 +79,19 @@ def log_metadata(metrics: dict) -> pd.DataFrame:
     # Filter out model:
     metrics = {key: metrics[key] for key in metrics if key != 'model'}
 
-    # Check if file exists already exists if not create one:
     metadata_cols = ['project', 'run_id', 'date_time_run',
                      'model_name', 'metric_name', 'metric_value']
 
-    model_metrics_filename = 'model_metrics.csv'
-    model_metrics_path = os.path.join('model_metrics/', model_metrics_filename)
+    if config['environment'] == 'local':
+        # Check if file exists already exists if not create one:
+        model_metrics_path = os.path.normpath(config['output_model_metrics_path'])
 
-    if not os.path.isfile(model_metrics_path):
-        # Create the CSV file with specified columns
-        df = pd.DataFrame(columns=metadata_cols)
-        df.to_csv(model_metrics_path, index=False)
+        if not os.path.isfile(model_metrics_path):
+            # Create the CSV file with specified columns
+            df = pd.DataFrame(columns=metadata_cols)
+            df.to_csv(model_metrics_path, index=False)
+    else:
+        raise ValueError(f"Environment {config['environment']} is not currently supported")
 
     # Create temp metadata dataframe using metrics:
     metadata_dict_details = {
@@ -106,31 +109,38 @@ def log_metadata(metrics: dict) -> pd.DataFrame:
     # Create temp metadata dataframe:
     metadata_temp = pd.DataFrame(data=metadata_dict, columns=metadata_cols)
 
-    # Update metadata csv with temp:
-    metadata = pd.read_csv(model_metrics_path, usecols=metadata_cols)
-    metadata = pd.concat([metadata, metadata_temp])
-    metadata.to_csv(model_metrics_path, index=False)
+    if config['environment'] == 'local':
+        # Update metadata csv with temp:
+        metadata = pd.read_csv(model_metrics_path, usecols=metadata_cols)
+        metadata = pd.concat([metadata, metadata_temp])
+        metadata.to_csv(model_metrics_path, index=False)
+    else:
+        raise ValueError(f"Environment {config['environment']} is not currently supported")
 
     return metadata_temp
 
 
-def save_model(model: RandomForestClassifier) -> None:
+def save_model(config: dict,
+               model: RandomForestClassifier) -> None:
     """Save a random forest model as a pickle file.
 
         Args:
+            config (dict): Project configuration file.
             model (RandomForestClassifier): The random forest model to be saved.
         Return:
             None
     """
 
-    try:
-        file_name = 'model_rf.pkl'
-        path = os.path.join('models/', file_name)
+    if config['environment'] == 'local':
+        try:
+            path = os.path.normpath(config['output_model_publish_path'])
 
-        with open(path, 'wb') as file:
-            pickle.dump(model, file)
-    except IOError:
-        raise IOError(f"Could not write model to path: {path}") from None
+            with open(path, 'wb') as file:
+                pickle.dump(model, file)
+        except IOError:
+            raise IOError(f"Could not write model to path: {path}") from None
+    else:
+        raise ValueError(f"Environment {config['environment']} is not currently supported")
 
     return None
 

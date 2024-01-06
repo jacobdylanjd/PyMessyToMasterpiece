@@ -2,22 +2,23 @@ import pandas as pd
 import os
 
 
-def import_data() -> pd.DataFrame:
+def import_data(config: dict) -> pd.DataFrame:
     """Import data for project.
 
-        Args: None
+        Args: config (dict): Project configuration file.
         Return:
             df (pd.DataFrame): Imported data.
     """
 
-    # Import csv from local path:
-    file_name = 'titanic.csv'
-    path = os.path.join('data/', file_name)
-
-    try:
-        df = pd.read_csv(path)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"File {file_name} not found. Please check the file path and try again.") from None
+    if config['environment'] == 'local':
+        try:
+            path = os.path.normpath(config['input_file_path_titanic'])
+            file_name = os.path.basename(path)
+            df = pd.read_csv(path)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File {file_name} not found. Please check the file path and try again.") from None
+    else:
+        raise ValueError(f"Environment {config['environment']} is not currently supported")
 
     return df
 

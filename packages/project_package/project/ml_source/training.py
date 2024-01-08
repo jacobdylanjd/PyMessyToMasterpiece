@@ -1,3 +1,4 @@
+# Install third-party packages:
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -6,6 +7,7 @@ import os
 import uuid
 from datetime import datetime
 import pickle
+import mlflow
 
 
 def model_training(data: dict) -> dict:
@@ -118,29 +120,4 @@ def log_metadata(config: dict, metrics: dict) -> pd.DataFrame:
         raise ValueError(f"Environment {config['environment']} is not currently supported")
 
     return metadata_temp
-
-
-def save_model(config: dict,
-               model: RandomForestClassifier) -> None:
-    """Save a random forest model as a pickle file.
-
-        Args:
-            config (dict): Project configuration file.
-            model (RandomForestClassifier): The random forest model to be saved.
-        Return:
-            None
-    """
-
-    if config['environment'] == 'local':
-        try:
-            path = os.path.normpath(config['output_model_publish_path'])
-
-            with open(path, 'wb') as file:
-                pickle.dump(model, file)
-        except IOError:
-            raise IOError(f"Could not write model to path: {path}") from None
-    else:
-        raise ValueError(f"Environment {config['environment']} is not currently supported")
-
-    return None
 

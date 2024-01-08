@@ -1,7 +1,8 @@
 local:
   input_file_path_titanic: 'data/titanic.csv'
   output_model_metrics_path: 'model_metrics/model_metrics.csv'
-  output_model_publish_path: 'models/model_rf.pkl'
+  output_model_publish_name: 'model_rf'
+  experiment_path: 'mlruns'
 <environment_name>:
   input_<parameter_name>: '<parameter_value>'
   output_<parameter_name>: '<parameter_value>'

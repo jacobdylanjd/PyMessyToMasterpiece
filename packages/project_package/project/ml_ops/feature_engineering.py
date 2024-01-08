@@ -1,6 +1,9 @@
+# Install third-party packages:
 import pandas as pd
 import logging
-from modules.ml_source.feature_engineering import drop_columns, one_hot_encode_column
+
+# Install project packages:
+from ..ml_source.feature_engineering import drop_columns, one_hot_encode_column
 
 
 def run_feature_engineering(logger: logging.Logger,

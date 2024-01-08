@@ -1,6 +1,9 @@
+# Install third-party packages:
 import pandas as pd
 import logging
-from modules.ml_source.import_data import import_data, run_data_quality_tests
+
+# Install project packages:
+from ..ml_source.import_data import import_data, run_data_quality_tests
 
 
 def run_import_data(logger: logging.Logger,

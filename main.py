@@ -1,9 +1,11 @@
 # Install project packages:
-from project.ml_ops.setup_logging import setup_logging
 from project.ml_ops.import_data import run_import_data
 from project.ml_ops.feature_engineering import run_feature_engineering
 from project.ml_ops.training import run_training
-from project.ml_ops.config import load_config
+
+# Install project packages:
+from shared.config.logging import setup_logging
+from shared.config.project_config import load_config
 
 # Install third-party packages:
 import mlflow

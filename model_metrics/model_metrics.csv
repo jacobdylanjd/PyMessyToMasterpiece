@@ -143,3 +143,6 @@ example,1fd6ffce-78df-4a6e-9a30-5f30a82ffb18,2024-01-08 21:38:57,RandomForest,re
 example,8891d7bb-b00c-41fa-934c-fc6dcd3edaae,2024-01-08 21:41:02,RandomForest,accuracy,0.7953488372093023
 example,8891d7bb-b00c-41fa-934c-fc6dcd3edaae,2024-01-08 21:41:02,RandomForest,precision,0.7710843373493976
 example,8891d7bb-b00c-41fa-934c-fc6dcd3edaae,2024-01-08 21:41:02,RandomForest,recall,0.7191011235955056
+example,e28fe87a-4410-4e8e-b863-d3d5b489779f,2024-01-13 09:37:20,RandomForest,accuracy,0.7953488372093023
+example,e28fe87a-4410-4e8e-b863-d3d5b489779f,2024-01-13 09:37:20,RandomForest,precision,0.7710843373493976
+example,e28fe87a-4410-4e8e-b863-d3d5b489779f,2024-01-13 09:37:20,RandomForest,recall,0.7191011235955056

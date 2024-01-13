@@ -1,13 +1,15 @@
+# Install third-party packages:
 import logging
 
 
 def setup_logging(module_name: str) -> logging.Logger:
-    """Setup python logging so that logs print to console.
+    """
+    Setup python logging so that logs print to console.
 
-            Args:
-                module_name (str): The module name to use in logger.
-            Return:
-                None
+    Args:
+        module_name (str): The module name to use in logger.
+    Return:
+        None
     """
 
     # Create a logger object:

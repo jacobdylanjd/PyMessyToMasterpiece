@@ -4,8 +4,11 @@ import pandas as pd
 import logging
 
 # Install project packages:
-from ..ml_source.training import split_data, model_training, log_metadata
-from .mlflow import publish_model
+from ..ml_source.training import split_data, model_training
+
+# Install shared packages:
+from shared.mlflow.ops.mlflow import publish_model
+from shared.monitoring.model_metrics import log_metadata
 
 
 def run_training(logger: logging.Logger,
@@ -39,7 +42,8 @@ def run_training(logger: logging.Logger,
 
     logger.info("Publish model to mlflow registry")
     publish_model(logger,
-                  config,
+                  config['environment'],
+                  config['output_model_publish_name'],
                   'production',
                   'model description...')
 

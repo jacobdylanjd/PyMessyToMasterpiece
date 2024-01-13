@@ -4,18 +4,20 @@ import logging
 from mlflow.tracking.client import MlflowClient
 
 # Install project packages:
-from ..ml_source.mlflow import wait_until_model_available
+from ..src.mlflow import wait_until_model_available
 
 
 def publish_model(logger: logging.Logger,
-                  config: dict,
+                  environment: str,
+                  model_name: str,
                   stage: str,
                   description: str) -> None:
     """
     Publish model to mlflow model registry.
     Args:
         logger (logging.Logger): Logger for logging.
-        config (dict): Project configuration file.
+        environment (str): Deployment environment.
+        model_name (str): Model name to publsh to registry.
         stage (str): model stage.
         description (str): model description for registry.
     Return:
@@ -24,9 +26,8 @@ def publish_model(logger: logging.Logger,
 
     client = MlflowClient()
     mlflow_run_id = mlflow.active_run().info.run_id
-    model_name = config['output_model_publish_name']
 
-    if config['environment'] == 'local':
+    if environment == 'local':
         mlflow.register_model(f"runs:/{mlflow_run_id}/model", model_name)
         new_model_version = client.get_latest_versions(model_name)[0].version
 
@@ -48,7 +49,7 @@ def publish_model(logger: logging.Logger,
         )
 
     else:
-        raise ValueError(f"Environment {config['environment']} is not currently supported")
+        raise ValueError(f"Environment {environment} is not currently supported")
 
     mlflow.set_tag("stage", stage)
     logger.info(f"Published model: {model_name} version {new_model_version} to stage {stage}")

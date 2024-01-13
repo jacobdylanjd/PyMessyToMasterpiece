@@ -4,6 +4,14 @@ import os
 
 
 def load_config(project_name: str) -> dict:
+    """
+    Setup python logging so that logs print to console.
+
+    Args:
+        project_name (str): The project name to load the config for.
+    Return:
+        None
+    """
 
     environment = os.environ.get('ENVIRONMENT')
 

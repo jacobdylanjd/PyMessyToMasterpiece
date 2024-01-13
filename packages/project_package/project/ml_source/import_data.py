@@ -4,11 +4,12 @@ import os
 
 
 def import_data(config: dict) -> pd.DataFrame:
-    """Import data for project.
+    """
+    Import data for project.
 
-        Args: config (dict): Project configuration file.
-        Return:
-            df (pd.DataFrame): Imported data.
+    Args: config (dict): Project configuration file.
+    Return:
+        df (pd.DataFrame): Imported data.
     """
 
     if config['environment'] == 'local':
@@ -25,12 +26,13 @@ def import_data(config: dict) -> pd.DataFrame:
 
 
 def run_data_quality_tests(df: pd.DataFrame) -> None:
-    """Run data quality tests.
+    """
+    Run data quality tests.
 
-        Args:
-            df (pd.DataFrame): Data to quality test.
-        Return:
-            None
+    Args:
+        df (pd.DataFrame): Data to quality test.
+    Return:
+        None
     """
 
     # Run data quality checks:

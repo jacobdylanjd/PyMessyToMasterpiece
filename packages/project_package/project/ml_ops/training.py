@@ -37,7 +37,7 @@ def run_training(logger: logging.Logger,
     mlflow.log_metric("recall", out_dict['recall'])
 
     logger.info("Log model metadata")
-    metadata = log_metadata(config, out_dict)
+    metadata = log_metadata(out_dict, config['environment'], config['output_model_metrics_path'])
     logger.info(f"Added {len(metadata.index)} rows to metadata file")
 
     logger.info("Publish model to mlflow registry")

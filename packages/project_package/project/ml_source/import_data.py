@@ -3,14 +3,16 @@ import pandas as pd
 import os
 
 
-def import_data(config: dict) -> pd.DataFrame:
+def import_data(config: dict) -> tuple:
     """
     Import data for project.
 
     Args: config (dict): Project configuration file.
     Return:
-        df (pd.DataFrame): Imported data.
+        name, df (tuple): Imported data.
     """
+
+    name = 'titanic_data'
 
     if config['environment'] == 'local':
         try:
@@ -22,7 +24,7 @@ def import_data(config: dict) -> pd.DataFrame:
     else:
         raise ValueError(f"Environment {config['environment']} is not currently supported")
 
-    return df
+    return name, df
 
 
 def run_data_quality_tests(df: pd.DataFrame) -> None:

@@ -26,7 +26,7 @@ mlflow.start_run(experiment_id=experiment_id, run_name=config['project_name'])
 
 # Run data import:
 try:
-    df = run_import_data(logger, config)
+    data = run_import_data(logger, config)
 except Exception as e:
     logger.exception(f"In import data - {e}")
     logger.info(f"End mlflow run, experiment_id: {experiment_id}")
@@ -35,7 +35,7 @@ except Exception as e:
 
 # Run feature engineering:
 try:
-    df = run_feature_engineering(logger, df)
+    df = run_feature_engineering(logger, data)
 except Exception as e:
     logger.exception(f"In feature engineering - {e}")
     mlflow.end_run()

@@ -29,3 +29,11 @@ package-shared: clean-build-shared
 	mkdir -p packages/wheels
 	mv packages/shared_package/dist/*.whl packages/wheels/
 	$(MAKE) clean-build-shared
+
+test-unit:
+	pytest -m unit
+
+test-integration:
+	pytest -m integration
+
+test: test-unit test-integration

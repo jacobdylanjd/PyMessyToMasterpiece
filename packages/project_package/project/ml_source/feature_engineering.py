@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
 
-def drop_columns(df):
+def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
     Drop columns not required for modelling.
 
@@ -13,14 +13,14 @@ def drop_columns(df):
         df (pd.DataFrame): Dataframe.
     """
 
-    cols = ['Name', 'Ticket', 'Cabin', 'Embarked', 'PassengerId']
-    df = df.drop(cols, axis=1)
+    cols = ['Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare']
+    df = df[cols]
 
     return df
 
 
 def one_hot_encode_column(df: pd.DataFrame,
-                          column: str):
+                          column: str) -> pd.DataFrame:
     """
     Perform one-hot-encoding for categorical column, replacing original column.
 
